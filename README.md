@@ -1,15 +1,25 @@
 # AI Chatbot - Production Ready
 
-Full-stack AI chatbot using AWS services with Bedrock integration.
+Full-stack AI chatbot with **multi-model support** using AWS services and Bedrock integration.
 
 ## Architecture
 
 - **Frontend**: React with Markdown support (S3 + CloudFront)
 - **Backend**: Lambda + API Gateway
-- **AI**: Amazon Bedrock (Google Gemma 3-27B-IT)
+- **AI**: Amazon Bedrock with **3 models** (Gemma, Llama, Mistral)
 - **Database**: DynamoDB with TTL
 - **Auth**: Cognito with email verification
 - **Config**: AWS Secrets Manager
+
+## Features
+
+✨ **Multi-Model Selection** - Switch between 3 AI models in real-time
+📝 **Markdown Rendering** - Beautiful formatted responses
+🔐 **Secure Authentication** - Email-based signup with OTP
+💬 **Chat History** - 30-day auto-cleanup with DynamoDB TTL
+🎨 **Modern UI** - Ultra-minimalist design inspired by ChatGPT
+⚡ **Serverless** - Fully scalable AWS infrastructure
+💰 **Cost-Effective** - ~$3-6/month for moderate usage
 
 ## Prerequisites
 
@@ -23,12 +33,15 @@ Full-stack AI chatbot using AWS services with Bedrock integration.
 
 ## Step 1: Enable Bedrock Model Access
 
+**Note**: Models auto-enable on first use. For marketplace models, first invocation activates them account-wide.
+
 1. Go to **AWS Console** → **Amazon Bedrock** (ap-south-1 region)
-2. Click **Model access** (left sidebar)
-3. Click **Manage model access**
-4. Check **Google Gemma 3-27B-IT** model
-5. Click **Request model access**
-6. Wait ~2 minutes for approval
+2. Go to **Model catalog**
+3. Search and open these models:
+   - **Google Gemma 3-27B-IT** (default)
+   - **Meta Llama 3 70B Instruct**
+   - **Mistral Large**
+4. Models will activate automatically when first invoked
 
 ## Step 2: Create DynamoDB Table
 
@@ -270,7 +283,10 @@ aws cloudfront create-invalidation --distribution-id d2hkiaqeb2l7i2 --paths "/*"
 
 ## Cost Estimate (Monthly)
 
-- **Bedrock (Gemma 3-27B-IT)**: ~$0.50-1 for 1000 messages
+- **Bedrock (3 models)**:
+  - Gemma 3-27B: ~$0.50-1 per 1000 messages
+  - Llama 3 70B: ~$2-3 per 1000 messages
+  - Mistral Large: ~$1-2 per 1000 messages
 - **Lambda**: Free tier covers ~1M requests
 - **DynamoDB**: ~$1.25 for 1M reads/writes (30-day TTL auto-cleanup)
 - **API Gateway**: Free tier covers 1M requests
@@ -278,7 +294,7 @@ aws cloudfront create-invalidation --distribution-id d2hkiaqeb2l7i2 --paths "/*"
 - **CloudFront**: Free tier covers 1TB transfer
 - **Secrets Manager**: $0.40/month per secret
 
-**Total: ~$3-6/month for moderate usage**
+**Total: ~$3-6/month for moderate usage (mixed model usage)**
 
 ---
 
@@ -334,5 +350,16 @@ AI-CHATBOT/
 - **Region**: ap-south-1 (Mumbai)
 - **S3 Bucket**: chatbot-frontend-hzlgj
 - **CloudFront**: d2hkiaqeb2l7i2.cloudfront.net
-- **Model**: google.gemma-3-27b-it
+- **Models**: 
+  - google.gemma-3-27b-it (default)
+  - meta.llama3-70b-instruct-v1:0
+  - mistral.mistral-large-2402-v1:0
 - **Secrets**: chatbot/frontend/config
+
+## Available AI Models
+
+| Model | Provider | Best For | Speed | Cost |
+|-------|----------|----------|-------|------|
+| Gemma 3-27B | Google | General chat, fast responses | ⚡⚡⚡ | $ |
+| Llama 3 70B | Meta | Complex reasoning, detailed answers | ⚡⚡ | $$ |
+| Mistral Large | Mistral AI | Balanced performance | ⚡⚡ | $$ |

@@ -9,6 +9,7 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedModel, setSelectedModel] = useState('google.gemma-3-27b-it');
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await ChatService.sendMessage(input);
+      const response = await ChatService.sendMessage(input, selectedModel);
       setMessages(prev => [...prev, { 
         role: 'assistant', 
         content: response, 
@@ -71,10 +72,21 @@ function App() {
           <span className="logo-icon">⚡</span>
           <h1>NEXUS AI</h1>
         </div>
-        <button className="logout-btn" onClick={() => { AuthService.signOut(); setUser(null); }}>
-          <span>Logout</span>
-          <span className="logout-icon">→</span>
-        </button>
+        <div className="header-controls">
+          <select 
+            value={selectedModel} 
+            onChange={e => setSelectedModel(e.target.value)}
+            className="model-selector"
+          >
+            <option value="google.gemma-3-27b-it">Gemma 3-27B</option>
+            <option value="meta.llama3-70b-instruct-v1:0">Llama 3 70B</option>
+            <option value="mistral.mistral-large-2402-v1:0">Mistral Large</option>
+          </select>
+          <button className="logout-btn" onClick={() => { AuthService.signOut(); setUser(null); }}>
+            <span>Logout</span>
+            <span className="logout-icon">→</span>
+          </button>
+        </div>
       </header>
       
       <div className="chat-container">

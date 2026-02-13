@@ -9,10 +9,10 @@ const getHeaders = async () => ({
 });
 
 export const ChatService = {
-  sendMessage: async (message) => {
+  sendMessage: async (message, model) => {
     const response = await axios.post(
       `${API_URL}/chat`,
-      { message },
+      { message, model },
       { headers: await getHeaders() }
     );
     return response.data.response;

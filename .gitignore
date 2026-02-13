@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+.aws-sam/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Build
+build/
+dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# SAM
+samconfig.toml

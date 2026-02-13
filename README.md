@@ -81,6 +81,7 @@ Full-stack AI chatbot using AWS services with Bedrock integration.
 2. **Trusted entity**: AWS service → Lambda
 3. **Permissions**: Attach these policies:
    - `AWSLambdaBasicExecutionRole`
+   - `AWSMarketplaceMeteringRegisterUsage` (for Bedrock marketplace models)
 4. Click **Next**, name it `ChatbotLambdaRole`
 5. Click **Create role**
 6. Open the role, click **Add permissions** → **Create inline policy**

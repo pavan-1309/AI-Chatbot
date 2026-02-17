@@ -5,7 +5,7 @@ const client = new SecretsManagerClient({ region: process.env.AWS_REGION || 'ap-
 async function getConfig() {
   try {
     const response = await client.send(
-      new GetSecretValueCommand({ SecretId: 'chatbot/frontend/config' })
+      new GetSecretValueCommand({ SecretId: 'chatbot/frontend/config2' })
     );
     const config = JSON.parse(response.SecretString);
     
